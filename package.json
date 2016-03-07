@@ -13,6 +13,14 @@
     "hbs": "~3.1.0",
     "morgan": "~1.6.1",
     "basex": "~0.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "xpath": "~0.0.22",
+    "xmldom": "~0.1.22",
+    "underscore": "~1.8.3",
+    "sequelize": "~3.19.3",
+    "sequelize-cli": "~2.3.1",
+    "pg": "~4.5.1",
+    "dive": "~0.5.0",
+    "nodemon": "~1.9.1"
   }
 }

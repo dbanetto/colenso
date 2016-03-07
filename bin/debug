@@ -1,11 +1,11 @@
 #!/bin/sh
-export npm_config_prefix=~/.node_modules
-export PATH=$PATH:$HOME/.node_modules/bin
 
-if type nodemon >/dev/null 2>&1; then
-    echo "Got nodemon"
+if [ "$NODE_ENV" = "docker" ] ; then
+    ../node_modules/.bin/sequelize db:migrate
+    # node bin/loaddata.js
+    DEBUG=colenso:* ../node_modules/.bin/nodemon bin/www
 else
-    npm -g install nodemon
+    node_modules/.bin/sequelize db:migrate
+    # node bin/loaddata.js
+    DEBUG=colenso:* node_modules/.bin/nodemon bin/www
 fi
-
-DEBUG=colenso:* nodemon bin/www

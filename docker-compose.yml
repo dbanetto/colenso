@@ -4,12 +4,19 @@ services:
     build: .
     command: bin/debug
     depends_on:
+      - basex
       - db
     ports:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
+    environment:
+      - BASEX_HOST=basex
+      - PG_HOST=db
+      - NODE_ENV=docker
   db:
+    image: postgres
+  basex:
     image: basex/basexhttp
     ports:
       - "1984:1984"
