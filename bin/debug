@@ -1,0 +1,11 @@
+#!/bin/sh
+export npm_config_prefix=~/.node_modules
+export PATH=$PATH:$HOME/.node_modules/bin
+
+if type nodemon >/dev/null 2>&1; then
+    echo "Got nodemon"
+else
+    npm -g install nodemon
+fi
+
+DEBUG=colenso:* nodemon bin/www
