@@ -19,9 +19,6 @@
     "xmldom": "~0.1.22",
     "cheerio": "*",
     "underscore": "~1.8.3",
-    "sequelize": "~3.19.3",
-    "sequelize-cli": "~2.3.1",
-    "pg": "~4.5.1",
     "dive": "~0.5.0",
     "nodemon": "~1.9.1"
   }

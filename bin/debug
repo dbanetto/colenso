@@ -1,11 +1,9 @@
 #!/bin/sh
 
 if [ "$NODE_ENV" = "docker" ] ; then
-    ../node_modules/.bin/sequelize db:migrate
     # node bin/loaddata.js
     DEBUG=colenso:* ../node_modules/.bin/nodemon bin/www
 else
-    node_modules/.bin/sequelize db:migrate
     # node bin/loaddata.js
     DEBUG=colenso:* node_modules/.bin/nodemon bin/www
 fi
