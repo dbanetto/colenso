@@ -19,6 +19,8 @@ block body
             +list-group-custom()
             each item in list
                 +list-group-item(item.url)
-                    h4 #{item.title}
+                    h4
+                        span(class="glyphicon #{item.glyph}")
+                        span  #{item.title}
         else
             h1 None found

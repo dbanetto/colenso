@@ -33,7 +33,8 @@ router.get('/*', function(req, res, next) {
     var list = _.map(data, function(ele) {
       return {
         url: req.originalUrl + '/' + ele.replace(/\.xml$/, '/view'),
-        title: ele.replace(/_/g, ' ')
+        title: ele.replace(/_/g, ' '),
+        glyph: ele.indexOf('.xml') > -1 ? 'glyphicon-file' : 'glyphicon-folder-close',
       };});
       var crumbs = breadcrumbs(req.url, req.baseUrl);
       if (req.baseUrl !== req.originalUrl) {
