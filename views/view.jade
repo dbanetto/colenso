@@ -1,5 +1,18 @@
 extends layout
 
 block body
+    .header
+        +navbar(title, "dropdown_menu", "inverse")
+          +nav_item("/") Home
+          +nav_item("/browse","active") Browse
+          +nav_item("/search") Search
+
     .container
+        ol.breadcrumb
+            each crumb in crumbs
+                if crumb.url
+                    li
+                        a(href="#{crumb.url}") #{crumb.title}
+                else
+                    li= crumb
         .tei #{doc}
