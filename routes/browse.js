@@ -10,7 +10,19 @@ router.get('/*/view', function(req, res, next) {
     if (err) console.log(err);
     var crumbs = breadcrumbs(req.url.replace(/\/view\/?$/, ''), req.baseUrl);
     crumbs.unshift({title: 'Browse', url: req.baseUrl});
-    res.render('view', { title: 'Colenso', doc: doc, crumbs: crumbs });
+    res.render('view', { title: 'Colenso', doc: doc, crumbs: crumbs, download_url:  req.baseUrl + url + '.xml' });
+  });
+});
+
+router.get('/*.xml', function(req, res, next) {
+  basex.getDocument(req.url, function(err, doc) {
+    if (err) console.log(err);
+    var name = _.last(req.url.split('/'));
+    res.setHeader('Content-disposition', 'attachment; filename=' + name);
+    res.setHeader('Content-type', 'text/xml');
+
+    res.write(doc, 'utf-8');
+    res.end();
   });
 });
 
