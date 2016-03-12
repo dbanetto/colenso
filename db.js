@@ -7,22 +7,24 @@ var session = new basex.Session(process.env.BASEX_HOST || 'localhost',
                                 process.env.BASEX_USER || 'admin',
                                 process.env.BASEX_PASS || 'admin');
 
- basex.Session.prototype.search= function(query, cb) {
-  var query = 
+
+basex.Session.prototype.search= function(query, cb) {
+  var xquery =
     "for $hit in collection('colenso')\n" +
     "where $hit[descendant::text() contains text '" + query + "']\n" +
-    "return <li>{ db:path($hit) }</li>";
-  this.execute("XQUERY <result> { " + query + " } </result> ",
+    "return <li path='{ db:path($hit) }'>{ $hit//*:title }</li>";
+  this.execute("XQUERY <result> { " + xquery + " } </result> ",
                 function(err, data) {
                   if (err) {
                     cb(err);
                     return;
                   }
-                  console.log(data);
                   var $ = cheerio.load(data.result);
                   var list = [];
                   $('li').each(function(i, elem) {
-                    list[i] = $(this).text();
+                    list[i] = { title: $(this).text().trim(),
+                      path: $(this).attr('path')
+                    }
                   });
                   cb(undefined, list);
                 });

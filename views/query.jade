@@ -14,6 +14,7 @@ block body
                 each item in results
                     +list-group-item(item.url)
                         h4
+                            span(class="glyphicon glyphicon-file")
                             span  #{item.title}
             else
                 h1 No results found
