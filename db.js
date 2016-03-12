@@ -24,14 +24,14 @@ basex.Session.prototype.search= function(query, cb) {
                   $('li').each(function(i, elem) {
                     list[i] = { title: $(this).text().trim(),
                       path: $(this).attr('path')
-                    }
+                    };
                   });
                   cb(undefined, list);
                 });
 };
 
 basex.Session.prototype.documentsInFolder = function(path, cb) {
-  this.execute("XQUERY <result> { for $c in collection('colenso" + path + "')\n return <li> { db:path($c) } </li> } </result> ",
+  this.execute("XQUERY <result> { for $c in collection('colenso" + path + "')\n return <li path='{ db:path($c) }'>{ $c//*:title }</li> } </result> ",
                 function(err, data) {
                   if (err) {
                     cb(err);
@@ -40,7 +40,10 @@ basex.Session.prototype.documentsInFolder = function(path, cb) {
                   var $ = cheerio.load(data.result);
                   var list = [];
                   $('li').each(function(i, elem) {
-                    list[i] = $(this).text();
+                    list[i] = {
+                      title: $(this).text().trim(),
+                      path: $(this).attr('path')
+                    };
                   });
                   cb(undefined, list);
                 });
@@ -54,15 +57,18 @@ basex.Session.prototype.foldersInPath = function(path, cb)  {
       return;
     }
     var list = _.map(data, function(line) {
-      line = line.replace(path, '');
-      if (line.indexOf('/') > -1) {
-        line = line.replace(/^\//, '');
-        line = line.replace(/\/.*$/, '');
+      line.path = line.path.replace(path, '');
+      if (line.path.indexOf('/') > -1) {
+        line.path = line.path.replace(/^\//, '');
+        line.path = line.path.replace(/\/.*$/, '');
+        if (line.path.indexOf('.xml') < 0) {
+          line.title = line.path.replace(/_/g, ' ');
+        }
       }
       return line;
     });
-
-    cb(undefined, _.uniq(list));
+    list = _.uniq(list, function (e) { return e.path; });
+    cb(undefined, list);
   });
 };
 

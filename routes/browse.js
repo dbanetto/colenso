@@ -32,9 +32,9 @@ router.get('/*', function(req, res, next) {
     if (err) console.log(err);
     var list = _.map(data, function(ele) {
       return {
-        url: req.originalUrl + '/' + ele.replace(/\.xml$/, '/view'),
-        title: ele.replace(/_/g, ' '),
-        glyph: ele.indexOf('.xml') > -1 ? 'glyphicon-file' : 'glyphicon-folder-close',
+        url: req.originalUrl + '/' + ele.path.replace(/\.xml$/, '/view'),
+        title: ele.title,
+        glyph: ele.path.indexOf('.xml') > -1 ? 'glyphicon-file' : 'glyphicon-folder-close',
       };});
       var crumbs = breadcrumbs(req.url, req.baseUrl);
       if (req.baseUrl !== req.originalUrl) {
