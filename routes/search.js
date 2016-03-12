@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var basex = require('../db');
+var _ = require('underscore');
 
 /* GET search page. */
 router.get('/', function(req, res, next) {
@@ -8,12 +9,17 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET advance search page */
-router.get('/result', function(req, res, next) {
-  basex.execute("list", function(err, data) {
-    console.log(err);
-    console.log(data);
-  });
-    res.render('result', { title: 'Colenso' });
+router.get('/query', function(req, res, next) {
+  basex.search(req.query.q,
+                function(err,data) {
+                  results = _.map(data, function(ele) {
+                    return {
+                      url: '/browse/' + ele.replace(/\.xml$/, '/view'),
+                      title: ele.replace(/_/g, ' ')
+                    };
+                  });
+                  res.render('query', { title: 'Colenso', results: results });
+                });
 });
 
 module.exports = router;

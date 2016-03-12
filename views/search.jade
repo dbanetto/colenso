@@ -8,4 +8,10 @@ block body
           +nav_item("/search","active") Search
     .container
         h1 Search
-        form
+        form.form-inline(role="search", method="get", action="/search/query")
+            h3 Text Search
+            .input-group
+                input.form-control(name="q", type="search", placeholder="Search")
+                span.input-group-btn
+                    button.btn.btn-default(type="submit", aria-label="search")
+                        span.glyphicon.glyphicon-search(aria-hidden="true")

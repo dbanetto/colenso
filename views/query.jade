@@ -1,0 +1,19 @@
+extends layout
+
+block body
+    .header
+        +navbar(title, "dropdown_menu", "inverse")
+          +nav_item("/") Home
+          +nav_item("/browse") Browse
+          +nav_item("/search","active") Search
+    .container
+        h1 Query results
+        .result
+            if results.length > 0
+                +list-group-custom()
+                each item in results
+                    +list-group-item(item.url)
+                        h4
+                            span  #{item.title}
+            else
+                h1 No results found
