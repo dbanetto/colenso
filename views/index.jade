@@ -9,7 +9,6 @@ block body
 
     .container
         .row
-          a.navbar-brand= title
           .col-md-3.pull-right
               form.form-inline(role="search", method="get", action="/search/query")
                   .input-group
@@ -18,8 +17,3 @@ block body
                           button.btn.btn-default(type="submit", aria-label="search")
                               span.glyphicon.glyphicon-search(aria-hidden="true")
     .container
-      +list-group-custom()
-          each doc in docs || []
-            +list-group-item("#")
-                h4.list-group-item-heading= doc.title
-                p.list-group-item-text= doc.author
