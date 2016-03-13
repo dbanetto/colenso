@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var basex = require('../db');
+var cheerio = require('cheerio');
 var _ = require('underscore');
 
 /* GET search page. */
@@ -10,7 +11,7 @@ router.get('/*/view', function(req, res, next) {
     if (err) console.log(err);
     var crumbs = breadcrumbs(req.url.replace(/\/view\/?$/, ''), req.baseUrl);
     crumbs.unshift({title: 'Browse', url: req.baseUrl});
-    res.render('view', { title: 'Colenso', doc: doc, crumbs: crumbs, download_url:  req.baseUrl + url + '.xml' });
+    res.render('view', { title: 'Colenso', doc: teiToObject(doc), crumbs: crumbs, download_url: req.baseUrl + url + '.xml' });
   });
 });
 
@@ -56,6 +57,29 @@ function breadcrumbs(url, baseUrl) {
     }
     return { title: val, url:  url};
   });
+}
+
+function teiToObject(doc) {
+  $ = cheerio.load(doc);
+
+  var author = $('<ul>');
+  $('titleStmt author name').each(function(i, elem) {
+    var item = $('<li>')
+    .attr('class', 'authors')
+    .append('<span class="glyphicon glyphicon-user" /> ')
+    .append('<span>' + $(this).text() + '</span>');
+    author.append(item);
+  });
+  console.log(author.html());
+
+
+  return { 
+    title: $('title').text(),
+    sourceDesc: $('sourceDesc').html(),
+    author: author.html(),
+    front: $('text front').text(),
+    body: $('text body').html(),
+  };
 }
 
 module.exports = router;
