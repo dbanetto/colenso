@@ -15,17 +15,23 @@ block body
                         a(href="#{crumb.url}") #{crumb.title}
                 else
                     li= crumb
-        .pull-right
-            a#download.btn.btn-success(href='#{download_url}') Download
         .tei
-            h1= doc.title
-            h3 Authors
-            p 
-                ul
-                    !{doc.author}
-            h3 Source Description
-            p !{doc.sourceDesc}
-            h3 Front
-            p.front= doc.front
-            h3 Body
-            p.text !{doc.body}
+            .panel.panel-default
+                .panel-heading
+                    h1
+                        !{doc.title}
+                        .pull-right
+                            a#download.btn.btn-success(href='#{download_url}') Download
+                .panel-body
+                    h3 Authors
+                    p 
+                        ul
+                            !{doc.author}
+                    h3 Source Description
+                    p !{doc.sourceDesc}
+            .panel.panel-default
+                .panel-body
+                    h3 Front
+                    p.front= doc.front
+                    h3 Body
+                    p.text !{doc.body}

@@ -11,7 +11,7 @@ var session = new basex.Session(process.env.BASEX_HOST || 'localhost',
 basex.Session.prototype.search= function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
-    "where $hit[descendant::text() contains text '" + query + "']\n" +
+    "where $hit//*:text[descendant::text() contains text '" + query + "']\n" +
     "return <li path='{ db:path($hit) }'>{ $hit//*:title }</li>";
   this.execute("XQUERY <result> { " + xquery + " } </result> ",
                 function(err, data) {
