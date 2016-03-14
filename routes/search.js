@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 
 /* GET advance search page */
 router.get('/query', function(req, res, next) {
+  if (req.query.q) {
   basex.search(req.query.q,
                 function(err,data) {
                   results = _.map(data, function(ele) {
@@ -20,6 +21,27 @@ router.get('/query', function(req, res, next) {
                   });
                   res.render('query', { title: 'Colenso', results: results });
                 });
+  } else if (req.query.xp) {
+  basex.searchXPath(req.query.xp,
+                function(err,data) {
+                  results = _.map(data, function(ele) {
+                    return {
+                      url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
+                      title: ele.title
+                    };
+                  });
+                  res.render('query', { title: 'Colenso', results: results });
+                });
+  } else if (req.query.xq) {
+  basex.searchXQuery(req.query.xq,
+                function(err,data) {
+                  res.render('query', { title: 'Colenso', xquery: data.result });
+                });
+
+  }else {
+    res.redirect('/search');
+  }
+  
 });
 
 module.exports = router;

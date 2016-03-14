@@ -9,7 +9,7 @@ block body
     .container
         h1 Query results
         .result
-            if results.length > 0
+            if results && results.length > 0
                 +list-group-custom()
                 each item in results
                     +list-group-item(item.url)
@@ -17,4 +17,8 @@ block body
                             span(class="glyphicon glyphicon-file")
                             span  #{item.title}
             else
-                h1 No results found
+                if xquery
+                    h3 XQuery Results
+                    code #{xquery}
+                else
+                    h1 No results found

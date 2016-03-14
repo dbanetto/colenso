@@ -30,6 +30,41 @@ basex.Session.prototype.search= function(query, cb) {
                 });
 };
 
+basex.Session.prototype.searchXPath = function(query, cb) {
+  var xquery =
+    "for $hit in collection('colenso')\n" +
+    "where $hit" + query + "\n" +
+    "return <li path='{ db:path($hit) }'>{ $hit//*:title }</li>";
+  this.execute("XQUERY <result> { " + xquery + " } </result> ",
+                function(err, data) {
+                  if (err) {
+                    cb(err);
+                    return;
+                  }
+                  var $ = cheerio.load(data.result);
+                  var list = [];
+                  $('li').each(function(i, elem) {
+                    list[i] = { title: $(this).text().trim(),
+                      path: $(this).attr('path')
+                    };
+                  });
+                  cb(undefined, list);
+                });
+};
+
+basex.Session.prototype.searchXQuery = function(query, cb) {
+  console.log(query);
+  this.execute("XQUERY " + query,
+                function(err, data) {
+                  if (err) {
+                    cb(err);
+                    console.log(err);
+                    return;
+                  }
+                  cb(undefined, data);
+                });
+};
+
 basex.Session.prototype.documentsInFolder = function(path, cb) {
   this.execute("XQUERY <result> { for $c in collection('colenso" + path + "')\n return <li path='{ db:path($c) }'>{ $c//*:title }</li> } </result> ",
                 function(err, data) {

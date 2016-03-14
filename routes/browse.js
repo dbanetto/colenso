@@ -41,6 +41,7 @@ router.get('/*', function(req, res, next) {
       if (req.baseUrl !== req.originalUrl) {
         crumbs.unshift({title: 'Browse', url: req.baseUrl});
       }
+      list = list.sort(function(a,b) { return a.title < b.title ? -1 : 1; });
       res.render('browse', { title: 'Colenso', list: list, crumbs: crumbs });
   });
 });

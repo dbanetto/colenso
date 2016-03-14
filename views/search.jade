@@ -15,3 +15,15 @@ block body
                 span.input-group-btn
                     button.btn.btn-default(type="submit", aria-label="search")
                         span.glyphicon.glyphicon-search(aria-hidden="true")
+        form.form-inline(role="search", method="get", action="/search/query")
+            h3 XPath Search
+            .input-group
+                input.form-control(name="xp", type="search", placeholder="Search via XPath")
+                span.input-group-btn
+                    button.btn.btn-default(type="submit", aria-label="search")
+                        span.glyphicon.glyphicon-search(aria-hidden="true")
+        form(role="search", method="get", action="/search/query")
+            h3 XQuery Search
+            .input-group
+                textarea.form-control(name="xq", type="search", placeholder="Search via XQuery")
+                button.btn.btn-default.pull-right(type="submit", aria-label="search") Search
