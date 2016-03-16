@@ -35,7 +35,7 @@ basex.Session.prototype.searchXPath = function(query, cb) {
     "for $hit in collection('colenso')\n" +
     "where $hit" + query + "\n" +
     "return <li path='{ db:path($hit) }'>{ $hit//*:title }</li>";
-  this.execute("XQUERY <result> { " + xquery + " } </result> ",
+  this.execute("XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';\n <result> { " + xquery + " } </result> ",
                 function(err, data) {
                   if (err) {
                     cb(err);
