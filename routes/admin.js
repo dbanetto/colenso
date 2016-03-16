@@ -15,7 +15,7 @@ router.post('/new', upload.single('newDoc'), function(req, res, next) {
   fs.readFile(req.file.path, function(err, data) {
     if (err) {
       console.log(err);
-      res.render('admin', {err: err});
+      res.redirect('/admin', {title: 'Colenso', err: err});
       return;
     }
     basex.execute('open colenso');
@@ -23,12 +23,12 @@ router.post('/new', upload.single('newDoc'), function(req, res, next) {
     basex.add(path, data, function(err, data) {
       if (err) {
         console.log(err);
-        res.render('admin', {err: err});
+        res.render('/admin', {err: err});
         return;
       }
       console.log(data);
-
-      res.render('admin', {result: data, path: path});
+      fs.unlinkSync(req.file.path);
+      res.redirect('/browse' + path.replace(/\.xml$/,'') + '/view');
     });
   });
 
