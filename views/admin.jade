@@ -1,0 +1,9 @@
+extends layout
+
+block body
+    .container
+        h3 Add new Document
+        form(action="admin/new", method="post", enctype="multipart/form-data")
+          input(type="file", name="newDoc")
+          input(type="text", name="path")
+          input(type="submit", name="submit")
