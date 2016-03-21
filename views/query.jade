@@ -1,13 +1,13 @@
 extends layout
+block navbar
+  +nav_item("/") Home
+  +nav_item("/browse") Browse
+  +nav_item("/search","active") Search
 
-block body
-    .header
-        +navbar(title, "dropdown_menu", "inverse")
-          +nav_item("/") Home
-          +nav_item("/browse") Browse
-          +nav_item("/search","active") Search
+block content
     .container
         h1 Query results
+        hr
         .result
             if results && results.length > 0
                 +list-group-custom()
@@ -22,3 +22,5 @@ block body
                     code #{xquery}
                 else
                     h1 No results found
+                    h2
+                        a(href="/search") Back to search

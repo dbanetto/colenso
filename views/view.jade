@@ -1,12 +1,11 @@
 extends layout
 
-block body
-    .header
-        +navbar(title, "dropdown_menu", "inverse")
-          +nav_item("/") Home
-          +nav_item("/browse","active") Browse
-          +nav_item("/search") Search
+block navbar
+  +nav_item("/") Home
+  +nav_item("/browse","active") Browse
+  +nav_item("/search") Search
 
+block content
     .container
         ol.breadcrumb
             each crumb in crumbs
@@ -15,23 +14,22 @@ block body
                         a(href="#{crumb.url}") #{crumb.title}
                 else
                     li= crumb
-        .tei
-            .panel.panel-default
-                .panel-heading
-                    h1
-                        !{doc.title}
-                        .pull-right
-                            a#download.btn.btn-success(href='#{download_url}') Download
-                .panel-body
-                    h3 Authors
-                    p 
-                        ul
-                            !{doc.author}
-                    h3 Source Description
-                    p !{doc.sourceDesc}
-            .panel.panel-default
-                .panel-body
-                    h3 Front
-                    p.front= doc.front
-                    h3 Body
-                    p.text !{doc.body}
+        .tei.panel.panel-default
+            .jumbotron
+                h2 !{doc.title}
+            .panel-body
+                .pull-right
+                    a#download.btn.btn-success(href='#{download_url}') Download
+                h2#author Authors
+                p 
+                    ul
+                        !{doc.author}
+                hr
+                h2 Source Description
+                p !{doc.sourceDesc}
+                hr
+                h2 Front
+                p#front.front= doc.front
+                hr
+                h2 Body
+                p#body.text !{doc.body}

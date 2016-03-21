@@ -1,9 +1,20 @@
 extends layout
 
-block body
+block navbar
+  +nav_item("/") Home
+  +nav_item("/browse") Browse
+  +nav_item("/search") Search
+
+block content
     .container
-        h3 Add new Document
+        h2 Add new Document
+        hr
         form(action="admin/new", method="post", enctype="multipart/form-data")
-          input(type="file", name="newDoc")
-          input(type="text", name="path")
-          input(type="submit", name="submit")
+          p
+              label(for="file") Document to upload
+              input(type="file", name="newDoc")
+          p
+              label(for="path") Upload Path
+              input(type="text", name="path")
+          p
+              input(type="submit", name="submit") 

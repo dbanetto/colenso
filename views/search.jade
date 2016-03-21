@@ -1,13 +1,14 @@
 extends layout
 
-block body
-    .header
-        +navbar(title, "dropdown_menu", "inverse")
-          +nav_item("/") Home
-          +nav_item("/browse") Browse
-          +nav_item("/search","active") Search
+block navbar
+  +nav_item("/") Home
+  +nav_item("/browse") Browse
+  +nav_item("/search","active") Search
+
+block content
     .container
         h1 Search
+        hr
         form.form-inline(role="search", method="get", action="/search/query")
             h3 Text Search
             .input-group
@@ -15,6 +16,7 @@ block body
                 span.input-group-btn
                     button.btn.btn-default(type="submit", aria-label="search")
                         span.glyphicon.glyphicon-search(aria-hidden="true")
+
         form.form-inline(role="search", method="get", action="/search/query")
             h3 XPath Search
             .input-group
@@ -22,8 +24,9 @@ block body
                 span.input-group-btn
                     button.btn.btn-default(type="submit", aria-label="search")
                         span.glyphicon.glyphicon-search(aria-hidden="true")
+
         form(role="search", method="get", action="/search/query")
             h3 XQuery Search
             .input-group
                 textarea.form-control(name="xq", type="search", placeholder="Search via XQuery")
-                button.btn.btn-default.pull-right(type="submit", aria-label="search") Search
+                button.btn.btn-default.pull-right(type="submit", aria-label="query") Query

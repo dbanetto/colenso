@@ -35,7 +35,12 @@ router.get('/query', function(req, res, next) {
   } else if (req.query.xq) {
   basex.searchXQuery(req.query.xq,
                 function(err,data) {
+                  if (err) {
+                    console.log(err);
+                    res.render('query', { title: 'Colenso', xquery: err });
+                  } else {
                   res.render('query', { title: 'Colenso', xquery: data.result });
+                  }
                 });
 
   }else {

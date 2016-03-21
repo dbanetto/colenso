@@ -11,6 +11,7 @@ services:
       - .:/usr/src/app
     environment:
       - BASEX_HOST=basex
+      - NODE_ENV=docker
   basex:
     image: basex/basexhttp
     ports:

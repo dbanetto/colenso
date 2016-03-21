@@ -2,9 +2,34 @@ extends ../node_modules/jade-bootstrap/_bootstrap
 
 block styles
   block meta
-  link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+  // link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+  link(rel="stylesheet",href="/css/bootstrap-cosmo.min.css")
   link(rel="stylesheet",href="/css/style.css")
   block css
+
+block body
+    .header
+        nav.navbar.navbar-default
+            .container-fluid
+                .navbar-header
+                    button.navbar-toggle(type="button", data-toggle="collapse", data-target="#dropdown_menu", aria-expanded="false", aria-controls="navbar")
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.navbar-brand Colenso
+                .collapse.navbar-collapse#dropdown_menu
+                    ul.nav.navbar-nav
+                        block navbar
+                    ul.nav.navbar-right
+                        li
+                            form.navbar-form(role="search", method="get", action="/search/query")
+                                .input-group
+                                    input.form-control(name="q", type="search", placeholder="Search")
+                                    span.input-group-btn
+                                        button.btn.btn-success(type="submit", aria-label="search")
+                                            span.glyphicon.glyphicon-search(aria-hidden="true")
+    block content
 
 block scripts
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")

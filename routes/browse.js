@@ -67,8 +67,8 @@ function teiToObject(doc) {
   $('titleStmt author name').each(function(i, elem) {
     var item = $('<li>')
     .attr('class', 'authors')
-    .append('<span class="glyphicon glyphicon-user" /> ')
-    .append('<span>' + $(this).text() + '</span>');
+    .append('<span class="glyphicon glyphicon-user" />')
+    .append('<span> ' + $(this).text() + '</span>');
     author.append(item);
   });
   console.log(author.html());

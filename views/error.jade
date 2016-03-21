@@ -1,7 +1,14 @@
 extends layout
 
-block body
-  .container
-    h1= message
-    h2= error.status
-    pre #{error.stack}
+block navbar
+  +nav_item("/") Home
+  +nav_item("/browse") Browse
+  +nav_item("/search") Search
+
+block content
+    .jumbotron
+        h1 Something went wrong
+    .container
+        h1= message
+        h2= error.status
+        pre #{error.stack}
