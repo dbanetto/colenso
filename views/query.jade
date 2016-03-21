@@ -1,4 +1,5 @@
 extends layout
+
 block navbar
   +nav_item("/") Home
   +nav_item("/browse") Browse
@@ -13,9 +14,10 @@ block content
                 +list-group-custom()
                 each item in results
                     +list-group-item(item.url)
-                        h4
+                        h4.large
                             span(class="glyphicon glyphicon-file")
-                            span  #{item.title}
+                            span #{item.title}
+                        span.small #{item.context}
             else
                 if xquery
                     h3 XQuery Results

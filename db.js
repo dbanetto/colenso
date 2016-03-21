@@ -12,7 +12,7 @@ basex.Session.prototype.search= function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
     "where $hit//*:text[descendant::text() contains text '" + query + "']\n" +
-    "return <li path='{ db:path($hit) }'>{ $hit//*:title }</li>";
+    "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit//*:titleStmt/*:author/*:name } </li>";
   this.execute("XQUERY <result> { " + xquery + " } </result> ",
                 function(err, data) {
                   if (err) {
@@ -22,7 +22,9 @@ basex.Session.prototype.search= function(query, cb) {
                   var $ = cheerio.load(data.result);
                   var list = [];
                   $('li').each(function(i, elem) {
-                    list[i] = { title: $(this).text().trim(),
+                    list[i] = { 
+                      title: $(this).attr('title').trim(),
+                      context: $(this).text().trim() || 'Unknown',
                       path: $(this).attr('path')
                     };
                   });
@@ -34,7 +36,7 @@ basex.Session.prototype.searchXPath = function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
     "where $hit" + query + "\n" +
-    "return <li path='{ db:path($hit) }'>{ $hit//*:title }</li>";
+    "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit" + query + "} </li>";
   this.execute("XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';\n <result> { " + xquery + " } </result> ",
                 function(err, data) {
                   if (err) {
@@ -44,7 +46,9 @@ basex.Session.prototype.searchXPath = function(query, cb) {
                   var $ = cheerio.load(data.result);
                   var list = [];
                   $('li').each(function(i, elem) {
-                    list[i] = { title: $(this).text().trim(),
+                    list[i] = { 
+                      title: $(this).attr('title').trim(),
+                      context: limitText($(this).text().trim(), 160),
                       path: $(this).attr('path')
                     };
                   });
@@ -53,12 +57,10 @@ basex.Session.prototype.searchXPath = function(query, cb) {
 };
 
 basex.Session.prototype.searchXQuery = function(query, cb) {
-  console.log(query);
   this.execute("XQUERY " + query,
                 function(err, data) {
                   if (err) {
                     cb(err);
-                    console.log(err);
                     return;
                   }
                   cb(undefined, data);
@@ -117,5 +119,10 @@ basex.Session.prototype.getDocument = function(path, cb) {
                   cb(undefined, data.result);
                 });
 };
+
+function limitText(str, limit) {
+  if (str.length <= limit) { return str; }
+  return str.substring(0, limit - 1) + '…';
+}
 
 module.exports = session;

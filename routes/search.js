@@ -16,7 +16,8 @@ router.get('/query', function(req, res, next) {
                   results = _.map(data, function(ele) {
                     return {
                       url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
-                      title: ele.title
+                      title: ele.title,
+                      context: ele.context
                     };
                   });
                   res.render('query', { title: 'Colenso', results: results });
@@ -27,7 +28,8 @@ router.get('/query', function(req, res, next) {
                   results = _.map(data, function(ele) {
                     return {
                       url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
-                      title: ele.title
+                      title: ele.title,
+                      context: ele.context
                     };
                   });
                   res.render('query', { title: 'Colenso', results: results });
