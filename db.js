@@ -8,10 +8,18 @@ var session = new basex.Session(process.env.BASEX_HOST || 'localhost',
                                 process.env.BASEX_PASS || 'admin');
 
 
+function searchQuerify(search) {
+  search = "'" + search + "'";
+  search = search.replace(/\s+AND\s+/, "\' ftand \'");
+  search = search.replace(/\s+OR\s+/, "\' ftor \'");
+  search = search.replace(/\s+NOT\s+/, "\' ftand ftnot \'");
+  search = search.replace(/\s+NOR\s+/, "\' ftor ftnot \'");
+  return search;
+}
 basex.Session.prototype.search= function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
-    "where $hit//*:text[descendant::text() contains text '" + query + "']\n" +
+    "where $hit//*:text[descendant::text() contains text " + searchQuerify(query) + "]\n" +
     "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit//*:titleStmt/*:author/*:name } </li>";
   this.execute("XQUERY <result> { " + xquery + " } </result> ",
                 function(err, data) {

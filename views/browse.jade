@@ -7,8 +7,6 @@ block navbar
 
 block content
     .container
-        h1 Browse
-        hr
         if crumbs.length > 0
             ol.breadcrumb
                 each crumb in crumbs
@@ -17,6 +15,9 @@ block content
                             a(href="#{crumb.url}") #{crumb.title}
                     else
                         li= crumb
+        h1 Browse
+        hr
+
         if list && list.length > 0
             +list-group-custom()
             each item in list
