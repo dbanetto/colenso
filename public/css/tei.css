@@ -1,0 +1,25 @@
+hi[rend="italic"] {
+  font-style: italic;
+}
+
+hi[rend="bold"] {
+  font-weight: bold;
+}
+
+hi[rend="sup"] {
+  vertical-align: super;
+}
+
+hi[rend="bold italic"] {
+  font-weight: bold;
+  font-style: italic;
+}
+
+p[rend="center"] {
+  text-align: center;
+}
+
+div[type="entry"] {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

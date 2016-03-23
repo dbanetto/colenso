@@ -23,14 +23,23 @@ block content
                     span  
                     a.btn.btn-success(href='download') Download
                 h2#author Authors
+                hr
                 p 
                     ul !{doc.author}
+
+                br
+                h2#srcDesc Source Description
                 hr
-                h2 Source Description
                 p !{doc.sourceDesc}
+
+                br
+                h2#front Front
                 hr
-                h2 Front
-                p#front.front= doc.front
+                p.front= doc.front
+
+                br
+                h2#body Body
                 hr
-                h2 Body
-                p#body.text !{doc.body}
+                p.text !{doc.body}
+block css
+    link(rel="stylesheet" href="/css/tei.css")
