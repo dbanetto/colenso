@@ -7,7 +7,12 @@ block navbar
 
 block content
     .container
-        h1 Query results
+        h1
+            | Query results
+            if docs
+                form(method="post", action="/search/download").pull-right
+                    input(type="hidden", name="docs", value=docs)
+                    button(type="submit").btn.btn-success Dowload Results
         hr
         .result
             if results && results.length > 0

@@ -17,7 +17,7 @@ function searchQuerify(search) {
   search = search.replace(/\s+NOR\s+/, "\' ftor ftnot \'");
   return search;
 }
-basex.Session.prototype.search= function(query, cb) {
+basex.Session.prototype.search = function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
     "where $hit//*:text[descendant::text() contains text " + searchQuerify(query) + "]\n" +
