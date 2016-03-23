@@ -3,37 +3,56 @@ var basex = require('../db');
 var fs = require("fs");
 var path = require('path');
 var dive = require('dive');
-var dom = require('xmldom').DOMParser;
 var xpath = require('xpath');
 
-basex.execute("drop db colenso");
-basex.execute("create db colenso");
+var progress = 0;
+basex.execute("remove colenso", function(err, data) {
+  if (err) {
+    console.log(err);
+  }
+  basex.execute("drop db colenso", function(err, data) {
+    if (err) {
+      console.log(err);
+    }
+    basex.execute("create db colenso", function(err, data) {
+      if (err) {
+        console.log(err);
+      }
+      loaddata();
+    });
+  });
+});
 
 function print(err, reply) {
+  progress = progress - 1;
   if (err) {
     console.log("Error: " + err);
+    process.exit(1);
   } else {
-    console.dir(reply);
+    console.log(reply);
+  }
+  if (progress === 0) {
+    basex.execute("xquery db:optimize('colenso')", function(err, data) {
+      if (err) {
+        console.log(err);
+      }
+      process.exit(0);
+    });
   }
 }
 
-// iterate over directory
-dive(__dirname + "/../data", function(err, file) {
-  if (err) throw err;
-  var filePath = file.substring(path.normalize(__dirname + '/../data').length);
-
-  fs.readFile(file, 'utf-8', function(err, data) {
+function loaddata() {
+  // iterate over directory
+  dive(__dirname + "/../data", function(err, file) {
     if (err) throw err;
-    // var doc = new dom().parseFromString(data, 'text/xml');
-    // var select = xpath.useNamespaces({"TEI": "http://www.tei-c.org/ns/1.0"});
+    progress = progress + 1;
+    var filePath = file.substring(path.normalize(__dirname + '/../data').length);
 
-    // var title = select("//TEI:title/text()", doc)[0].data;
-
-    // var author = select("//TEI:name/text()", doc)[0];
-    // author = author === undefined ? 'Unkown' : author.data;
-
-    // var srcDesc  = select("//TEI:sourceDesc", doc)[0].toString();
-    basex.add(filePath, data, print);
+    fs.readFile(file, 'utf-8', function(err, data) {
+      if (err) throw err;
+      basex.add(filePath, data, print);
+    });
+  }, function() {
+    console.log('Completed walk of directory');
   });
-
-});
+}
