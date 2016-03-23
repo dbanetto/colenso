@@ -26,10 +26,18 @@ router.get('/*/edit', function(req, res, next) {
 });
 
 router.post('/*/edit', function(req, res, next) {
-  var url = req.url.replace(/\/edit\/?/, '\/view\/');
-  console.log(req);
-  console.log(req.baseUrl + url);
-  res.redirect(req.baseUrl + url);
+  var url = req.url.replace(/\/edit\/?/, '');
+  basex.execute('open colenso', function(err, data) {
+    if (err) {
+      res.redirect(req.originalUrl);
+    }
+    basex.execute('REPLACE ' + url.replace(/^\/browse/,'') + '.xml ' + req.body.doc, function (err, data) {
+      if (err) {
+        res.redirect(req.originalUrl);
+      }
+      res.redirect(req.baseUrl + url + '/view');
+    });
+  });
 });
 
 router.get('/*.xml', function(req, res, next) {

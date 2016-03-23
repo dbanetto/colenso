@@ -11,15 +11,24 @@ block content
             input(type="hidden", name="_method", value="put")
             .form-group
                 label(for="doc") Document
-                textarea(id="doc", name="doc").col-lg-12 !{doc}
+                input(id="doc", type="hidden", name="doc", value=doc)
             .form-group
                 button.btn.btn-default(type="submit").col-lg-1.pull-right Update
                 
 block css
     link(rel="stylesheet" href="/css/codemirror.css")
+    style.
+        .CodeMirror {
+          border: 1px solid #eee;
+          height: auto;
+        }
 
 block js
     script(src="/js/codemirror.js")
 
-    script
-        | CodeMirror.fromTextArea($('#doc')[0], {lineWrapping: true});
+    script.
+         var editor = CodeMirror.fromTextArea($('#doc')[0], {
+             lineWrapping: true,
+             viewportMargin: Infinity
+         });
+         CodeMirror.on(editor, 'change', function(cm) { $('#doc').val(cm.getValue()); console.log($('#doc').val()); });
