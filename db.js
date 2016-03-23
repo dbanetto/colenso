@@ -9,6 +9,7 @@ var session = new basex.Session(process.env.BASEX_HOST || 'localhost',
 
 
 function searchQuerify(search) {
+  search = search.replace(/'/, "\\'");
   search = "'" + search + "'";
   search = search.replace(/\s+AND\s+/, "\' ftand \'");
   search = search.replace(/\s+OR\s+/, "\' ftor \'");
