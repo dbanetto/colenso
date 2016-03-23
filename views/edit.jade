@@ -7,13 +7,24 @@ block navbar
 
 block content
     .container
+        ol.breadcrumb
+            each crumb in crumbs
+                if crumb.url
+                    li
+                        a(href="#{crumb.url}") #{crumb.title}
+                else
+                    li= crumb
+
+        h1 
+            |Editting: #{docTitle}
+            a.btn.btn-default.pull-right(href="view") Back
         form(role="update", method="post", action=edit_url)
             input(type="hidden", name="_method", value="put")
             .form-group
                 label(for="doc") Document
                 input(id="doc", type="hidden", name="doc", value=doc)
             .form-group
-                button.btn.btn-default(type="submit").col-lg-1.pull-right Update
+                button.btn.btn-warning(type="submit").col-lg-1.pull-right Update
                 
 block css
     link(rel="stylesheet" href="/css/codemirror.css")
@@ -31,4 +42,4 @@ block js
              lineWrapping: true,
              viewportMargin: Infinity
          });
-         CodeMirror.on(editor, 'change', function(cm) { $('#doc').val(cm.getValue()); console.log($('#doc').val()); });
+         CodeMirror.on(editor, 'change', function(cm) { $('#doc').val(cm.getValue()); });

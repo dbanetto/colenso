@@ -19,7 +19,9 @@ block content
                 h2 !{doc.title}
             .panel-body
                 .pull-right
-                    a#download.btn.btn-success(href='#{download_url}') Download
+                    a.btn.btn-warning(href='edit') Edit
+                    span  
+                    a.btn.btn-success(href='download') Download
                 h2#author Authors
                 p 
                     ul !{doc.author}

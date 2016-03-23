@@ -21,7 +21,8 @@ router.get('/*/edit', function(req, res, next) {
     if (err) console.log(err);
     var crumbs = breadcrumbs(req.url.replace(/\/edit\/?$/, ''), req.baseUrl);
     crumbs.unshift({title: 'Browse', url: req.baseUrl});
-    res.render('edit', { title: 'Colenso', doc: doc, crumbs: crumbs, edit_url: req.originalUrl });
+    var tei = teiToObject(doc);
+    res.render('edit', { title: 'Colenso - Eidtting ' + tei.title, docTitle: tei.title, doc: doc, crumbs: crumbs, edit_url: req.originalUrl });
   });
 });
 
@@ -40,10 +41,11 @@ router.post('/*/edit', function(req, res, next) {
   });
 });
 
-router.get('/*.xml', function(req, res, next) {
-  basex.getDocument(req.url, function(err, doc) {
+router.get('/*/download', function(req, res, next) {
+  var url = req.url.replace(/\/download\/?/, '.xml');
+  basex.getDocument(url, function(err, doc) {
     if (err) console.log(err);
-    var name = _.last(req.url.split('/'));
+    var name = _.last(url.split('/'));
     res.setHeader('Content-disposition', 'attachment; filename=' + name);
     res.setHeader('Content-type', 'text/xml');
 
@@ -96,8 +98,6 @@ function teiToObject(doc) {
     .append('<span> ' + $(this).text() + '</span>');
     author.append(item);
   });
-  console.log(author.html());
-
 
   return { 
     title: $('title').text(),
