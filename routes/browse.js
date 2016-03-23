@@ -15,6 +15,23 @@ router.get('/*/view', function(req, res, next) {
   });
 });
 
+router.get('/*/edit', function(req, res, next) {
+  var url = req.url.replace(/\/edit\/?/, '');
+  basex.getDocument(url + ".xml", function(err, doc) {
+    if (err) console.log(err);
+    var crumbs = breadcrumbs(req.url.replace(/\/edit\/?$/, ''), req.baseUrl);
+    crumbs.unshift({title: 'Browse', url: req.baseUrl});
+    res.render('edit', { title: 'Colenso', doc: doc, crumbs: crumbs, edit_url: req.originalUrl });
+  });
+});
+
+router.post('/*/edit', function(req, res, next) {
+  var url = req.url.replace(/\/edit\/?/, '\/view\/');
+  console.log(req);
+  console.log(req.baseUrl + url);
+  res.redirect(req.baseUrl + url);
+});
+
 router.get('/*.xml', function(req, res, next) {
   basex.getDocument(req.url, function(err, doc) {
     if (err) console.log(err);

@@ -1,0 +1,25 @@
+extends layout
+
+block navbar
+  +nav_item("/") Home
+  +nav_item("/browse","active") Browse
+  +nav_item("/search") Search
+
+block content
+    .container
+        form(role="update", method="post", action=edit_url)
+            input(type="hidden", name="_method", value="put")
+            .form-group
+                label(for="doc") Document
+                textarea(id="doc", name="doc").col-lg-12 !{doc}
+            .form-group
+                button.btn.btn-default(type="submit").col-lg-1.pull-right Update
+                
+block css
+    link(rel="stylesheet" href="/css/codemirror.css")
+
+block js
+    script(src="/js/codemirror.js")
+
+    script
+        | CodeMirror.fromTextArea($('#doc')[0], {lineWrapping: true});
