@@ -9,7 +9,7 @@ block content
     .container
         h1
             | Query results
-            if docs
+            if docs && docs.length > 0
                 form(method="post", action="/search/download").pull-right
                     input(type="hidden", name="docs", value=docs)
                     button(type="submit").btn.btn-success Dowload Results
