@@ -13,7 +13,16 @@ block content
                 form(method="post", action="/search/download").pull-right
                     input(type="hidden", name="docs", value=docs)
                     button(type="submit").btn.btn-success Dowload Results
+
         hr
+        if query
+            form(method="get" action="/search/query")
+                input(type="hidden", name="q", value=query)
+                .input-group
+                    input.form-control(name="r", type="search", placeholder="Refine Search")
+                    span.input-group-btn
+                        button.btn.btn-success(type="submit", aria-label="search")
+                            span.glyphicon.glyphicon-search(aria-hidden="true")
         .result
             if results && results.length > 0
                 +list-group-custom()

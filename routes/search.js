@@ -12,6 +12,9 @@ router.get('/', function(req, res, next) {
 /* GET advance search page */
 router.get('/query', function(req, res, next) {
   if (req.query.q) {
+    if (req.query.r) {
+      req.query.q = req.query.q + " AND " + req.query.r;
+    }
   basex.search(req.query.q,
                 function(err,data) {
                   var docs = [];
@@ -23,7 +26,7 @@ router.get('/query', function(req, res, next) {
                       context: ele.context
                     };
                   });
-                  res.render('query', { title: 'Colenso', results: results, docs: docs });
+                  res.render('query', { title: 'Colenso', results: results, docs: docs, query: req.query.q });
                 });
   } else if (req.query.xp) {
   basex.searchXPath(req.query.xp,
