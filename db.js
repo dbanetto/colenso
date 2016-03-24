@@ -11,10 +11,11 @@ var session = new basex.Session(process.env.BASEX_HOST || 'localhost',
 function searchQuerify(search) {
   search = search.replace(/'/, "\\'");
   search = "'" + search + "'";
-  search = search.replace(/\s+AND\s+/, "\' ftand \'");
-  search = search.replace(/\s+OR\s+/, "\' ftor \'");
-  search = search.replace(/\s+NOT\s+/, "\' ftand ftnot \'");
-  search = search.replace(/\s+NOR\s+/, "\' ftor ftnot \'");
+  search = search.replace(/\s+AND\s+/g, "\' ftand \'");
+  search = search.replace(/\s+OR\s+/g, "\' ftor \'");
+  search = search.replace(/\s+NOT\s+/g, "\' ftand ftnot \'");
+  search = search.replace(/\s+NOR\s+/g, "\' ftor ftnot \'");
+  console.log(search);
   return search;
 }
 basex.Session.prototype.search = function(query, cb) {
