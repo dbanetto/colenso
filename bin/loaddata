@@ -50,7 +50,7 @@ function loaddata() {
 
     fs.readFile(file, 'utf-8', function(err, data) {
       if (err) throw err;
-      basex.add(filePath, data, print);
+      basex.addDocument(filePath, data, print);
     });
   }, function() {
     console.log('Completed walk of directory');

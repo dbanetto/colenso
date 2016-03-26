@@ -18,9 +18,7 @@ router.post('/new', upload.single('newDoc'), function(req, res, next) {
       res.redirect('/admin', {title: 'Colenso', err: err});
       return;
     }
-    basex.execute('open colenso');
-
-    basex.add(path, data, function(err, data) {
+    basex.addDocument(path, data, function(err, data) {
       if (err) {
         console.log(err);
         res.render('/admin', {err: err});

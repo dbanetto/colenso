@@ -1,5 +1,8 @@
 var basex = require('basex');
 var cheerio = require('cheerio');
+var xsd = require('libxml-xsd');
+var xml = xsd.libxmljs;
+var fs = require('fs');
 var _ = require('underscore');
 
 var session = new basex.Session(process.env.BASEX_HOST || 'localhost',
@@ -18,10 +21,11 @@ function searchQuerify(search) {
   console.log(search);
   return search;
 }
+
 basex.Session.prototype.search = function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
-    "where $hit//*:text[descendant::text() contains text " + searchQuerify(query) + "]\n" +
+    "where $hit//*:text[. contains text " + searchQuerify(query) + "]\n" +
     "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit//*:titleStmt/*:author/*:name } </li>";
   this.execute("XQUERY <result> { " + xquery + " } </result> ",
                 function(err, data) {
@@ -78,7 +82,8 @@ basex.Session.prototype.searchXQuery = function(query, cb) {
 };
 
 basex.Session.prototype.documentsInFolder = function(path, cb) {
-  this.execute("XQUERY <result> { for $c in collection('colenso" + path + "')\n return <li path='{ db:path($c) }'>{ $c//*:title }</li> } </result> ",
+  this.execute("XQUERY <result> { for $c in collection('colenso" + path + "')\n" +
+               "return <li path='{ db:path($c) }'>{ $c//*:title }</li> } </result> ",
                 function(err, data) {
                   if (err) {
                     cb(err);
@@ -98,7 +103,7 @@ basex.Session.prototype.documentsInFolder = function(path, cb) {
 
 basex.Session.prototype.foldersInPath = function(path, cb)  {
   this.documentsInFolder(path, function(err, data) {
-    path = path.replace('/', '');
+    path = path.replace(/^\//, '');
     if (err) {
       cb(err);
       return;
@@ -117,6 +122,31 @@ basex.Session.prototype.foldersInPath = function(path, cb)  {
     list = _.uniq(list, function (e) { return e.path; });
     cb(undefined, list);
   });
+};
+
+
+basex.Session.prototype.addDocument = function(path, contents, cb)  {
+  var basex = this;
+
+  var xmlDoc = xml.parseXmlString(contents);
+
+  if (xmlDoc === null) {
+    console.log('xml error: ' + err);
+    return;
+  }
+
+
+  basex.execute('open colenso');
+  basex.add(path, contents, function(err, data) {
+    if (err) {
+      console.log('validate error ' + err);
+      cb(err);
+      return;
+    }
+    console.log('added ' + path);
+    cb(undefined, data);
+  });
+
 };
 
 basex.Session.prototype.getDocument = function(path, cb) {
