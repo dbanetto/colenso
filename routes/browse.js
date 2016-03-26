@@ -121,7 +121,7 @@ function teiToObject(doc) {
     sourceDesc: $('sourceDesc').html(),
     correspDesc: correspDesc,
     author: author.html(),
-    front: $('text front').text(),
+    front: $('text front').html(),
     body: $('text body').html(),
   };
 }
