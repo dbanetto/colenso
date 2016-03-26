@@ -33,6 +33,26 @@ block content
                 p !{doc.sourceDesc}
 
                 br
+                h2#correspDesc Corrospondence Description
+                hr
+                .row
+                    if doc.correspDesc.recieve
+                        .col-sm-6
+                            h3#from Recieved
+                            p
+                                if doc.correspDesc.recieve.person
+                                   |To #{doc.correspDesc.recieve.person}.
+
+                    if doc.correspDesc.sent
+                        .col-sm-6
+                            h3#to Sent
+                            p
+                                if doc.correspDesc.sent.date
+                                   |Sent on #{doc.correspDesc.sent.date}.
+                                if doc.correspDesc.sent.place
+                                   |  From #{doc.correspDesc.sent.place}.
+
+                br
                 h2#front Front
                 hr
                 p.front= doc.front

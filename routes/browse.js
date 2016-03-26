@@ -99,9 +99,27 @@ function teiToObject(doc) {
     author.append(item);
   });
 
+  var correspDesc = {};
+  $('correspDesc').find('correspAction').each(function(i, ele) {
+    var obj = {
+      date: $(this).find('date').text(),
+      place: $(this).find('name[type="place"]').text(),
+      person: $(this).find('name[type="person"]').text()
+    };
+
+    if ($(this).attr('type') === 'sent') {
+      correspDesc.sent = obj;
+    } else if ($(this).attr('type') === 'received') {
+      correspDesc.recieve = obj;
+    } else {
+      console.log("Unimplemented correspAction type " + $(this).attr('type'));
+    }
+  });
+
   return { 
     title: $('title').text(),
     sourceDesc: $('sourceDesc').html(),
+    correspDesc: correspDesc,
     author: author.html(),
     front: $('text front').text(),
     body: $('text body').html(),
