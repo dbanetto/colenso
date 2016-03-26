@@ -7,28 +7,45 @@ block styles
   block css
 
 block body
-    .header
-        nav.navbar.navbar-default
-            .container-fluid
-                .navbar-header
-                    button.navbar-toggle(type="button", data-toggle="collapse", data-target="#dropdown_menu", aria-expanded="false", aria-controls="navbar")
-                        span.sr-only Toggle navigation
-                        span.icon-bar
-                        span.icon-bar
-                        span.icon-bar
-                    a.navbar-brand Colenso
-                .collapse.navbar-collapse#dropdown_menu
-                    ul.nav.navbar-nav
-                        block navbar
-                    ul.nav.navbar-right
+    .wrapper
+        .header
+            nav.navbar.navbar-default
+                .container-fluid
+                    .navbar-header
+                        button.navbar-toggle(type="button", data-toggle="collapse", data-target="#dropdown_menu", aria-expanded="false", aria-controls="navbar")
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand Colenso
+                    .collapse.navbar-collapse#dropdown_menu
+                        ul.nav.navbar-nav
+                            block navbar
+                        ul.nav.navbar-right
+                            li
+                                form.navbar-form(role="search", method="get", action="/search/query")
+                                    .input-group
+                                        input.form-control(name="q", type="search", placeholder="Search")
+                                        span.input-group-btn
+                                            button.btn.btn-success(type="submit", aria-label="search")
+                                                span.glyphicon.glyphicon-search(aria-hidden="true")
+        #main
+            block content
+
+    footer.footer
+        .container.muted-text
+            .row
+                .col-sm-6
+                    h4 Site Map
+                    ul.footer-links
                         li
-                            form.navbar-form(role="search", method="get", action="/search/query")
-                                .input-group
-                                    input.form-control(name="q", type="search", placeholder="Search")
-                                    span.input-group-btn
-                                        button.btn.btn-success(type="submit", aria-label="search")
-                                            span.glyphicon.glyphicon-search(aria-hidden="true")
-    block content
+                            a(href="/") Home
+                        li
+                            a(href="/browse") Browse
+                        li
+                            a(href="/search") Search
+                        li
+                            a(href="/admin") Admin
 
 block scripts
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")

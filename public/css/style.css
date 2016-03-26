@@ -1,0 +1,23 @@
+html, body {
+  height: 100%;
+}
+#main {
+  margin-bottom: 232px;
+}
+.wrapper {
+  min-height: 100%;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding-top: 10px;
+  margin-top: -200px;
+  height: 200px;
+  background: #f5f5f5;
+}
+
+ul.footer-links {
+  display: block;
+}
