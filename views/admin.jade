@@ -7,14 +7,20 @@ block navbar
 
 block content
     .container
+        if error
+            .alert.alert-danger.alert-dismissible(role="alert")
+                button.close(data-dismiss="alert", aria-label="Close")
+                    span(aria-hidden="true") &times;
+                strong Error
+                |  #{error}
         h2 Add new Document
         hr
-        form(action="admin/new", method="post", enctype="multipart/form-data")
-          p
-              label(for="file") Document to upload
-              input(type="file", name="newDoc")
-          p
-              label(for="path") Upload Path
-              input(type="text", name="path")
-          p
-              input(type="submit", name="submit") 
+        form.form-horizontal(action="admin/new", method="post", enctype="multipart/form-data")
+            .from-group
+                label.control-label(for="path") Upload Path
+                input.form-control(type="text", name="path", required="true")
+                label.control-label(for="file") Document to upload
+                input(type="file", name="newDoc", required="true")
+                br
+            .from-group
+                button.btn.btn-default(type="submit", name="submit") Upload Document

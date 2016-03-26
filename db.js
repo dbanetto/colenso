@@ -128,13 +128,12 @@ basex.Session.prototype.foldersInPath = function(path, cb)  {
 basex.Session.prototype.addDocument = function(path, contents, cb)  {
   var basex = this;
 
+  try {
   var xmlDoc = xml.parseXmlString(contents);
-
-  if (xmlDoc === null) {
-    console.log('xml error: ' + err);
+  } catch(err) {
+    cb('Invalid XML');
     return;
   }
-
 
   basex.execute('open colenso');
   basex.add(path, contents, function(err, data) {

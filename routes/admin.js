@@ -7,7 +7,9 @@ var upload = multer({ dest: '/tmp/' });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('admin', { title: 'Colenso' });
+  var error = req.session.error;
+  req.session.error = undefined;
+  res.render('admin', { title: 'Colenso', error: error });
 });
 /* GET home page. */
 router.post('/new', upload.single('newDoc'), function(req, res, next) {
@@ -15,13 +17,15 @@ router.post('/new', upload.single('newDoc'), function(req, res, next) {
   fs.readFile(req.file.path, function(err, data) {
     if (err) {
       console.log(err);
-      res.redirect('/admin', {title: 'Colenso', err: err});
+      req.session.error = err;
+      res.redirect('/admin');
       return;
     }
     basex.addDocument(path, data, function(err, data) {
       if (err) {
         console.log(err);
-        res.render('/admin', {err: err});
+        req.session.error = err;
+        res.redirect('/admin');
         return;
       }
       console.log(data);
