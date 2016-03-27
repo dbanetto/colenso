@@ -15,17 +15,17 @@ block content
                 else
                     li= crumb
 
-        h1#top
-            |Editting: #{docTitle}
-            a.btn.btn-default.pull-right(href="view") Back
+        h1#top Editting: #{docTitle}
         form(role="update", method="post", action=edit_url)
             input(type="hidden", name="_method", value="put")
             .form-group
                 input(id="doc", type="hidden", name="doc", value=doc)
             .form-group
+                a.btn.btn-default(href="..") Back
+                span 
                 a.btn.btn-default(href="#top") Back to Top
                 button.btn.btn-warning(type="submit").col-lg-1.pull-right Update
-                
+
 block css
     link(rel="stylesheet" href="/css/codemirror.css")
     style.

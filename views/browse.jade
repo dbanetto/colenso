@@ -15,7 +15,7 @@ block content
                             a(href="#{crumb.url}") #{crumb.title}
                     else
                         li= crumb
-        h1 Browse
+        h1#top Browse
         hr
 
         if list && list.length > 0
@@ -25,6 +25,10 @@ block content
                     h4
                         span(class="glyphicon #{item.glyph}")
                         span  #{item.title}
+            br
+            a.btn.btn-default(href="..") Back
+            if list.length > 10
+                a.btn.btn-default.pull-right(href="#top") Back to Top
         else
             h1 None found
 

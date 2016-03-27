@@ -23,8 +23,9 @@ router.get('/*/edit', function(req, res, next) {
     if (err) console.log(err);
     var crumbs = breadcrumbs(req.url.replace(/\/edit\/?$/, ''), req.baseUrl);
     crumbs.unshift({title: 'Browse', url: req.baseUrl});
-    var tei = teiToObject(doc);
-    res.render('edit', { title: 'Colenso - Eidtting ' + tei.title, docTitle: tei.title, doc: doc, crumbs: crumbs, edit_url: req.originalUrl });
+    var teiDoc = teiToObject(doc);
+    crumbs[crumbs.length - 1] = teiDoc.title;
+    res.render('edit', { title: 'Colenso - Eidtting ' + teiDoc.title, docTitle: teiDoc.title, doc: doc, crumbs: crumbs, edit_url: req.originalUrl });
   });
 });
 

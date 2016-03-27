@@ -16,8 +16,20 @@ block content
                     li= crumb
         .tei.panel.panel-default
             .jumbotron
-                h2 !{doc.title}
+                h2#top !{doc.title}
             .panel-body
+                span.large Quick Navigation
+                br
+                a.btn.btn-default(href="#author") Author
+                span 
+                a.btn.btn-default(href="#srcDesc") Source
+                span 
+                a.btn.btn-default(href="#correspDesc") Corrospondence
+                span 
+                a.btn.btn-default(href="#front") Front
+                span 
+                a.btn.btn-default(href="#body") Body
+                span 
                 .pull-right
                     a.btn.btn-warning(href='edit') Edit
                     span  
@@ -61,5 +73,9 @@ block content
                 h2#body Body
                 hr
                 p.text !{doc.body}
+
+        br
+        a.btn.btn-default(href="..") Back
+        a.btn.btn-default.pull-right(href="#top") Back to Top
 block css
     link(rel="stylesheet" href="/css/tei.css")
