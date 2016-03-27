@@ -9,7 +9,7 @@ block content
     .container
         h1 Search
         hr
-        form.form-inline(role="search", method="get", action="/search/query")
+        form(role="search", method="get", action="/search/query")
             h3 Text Search
             .input-group
                 input.form-control(name="q", type="search", placeholder="Search")
@@ -17,7 +17,8 @@ block content
                     button.btn.btn-default(type="submit", aria-label="search")
                         span.glyphicon.glyphicon-search(aria-hidden="true")
 
-        form.form-inline(role="search", method="get", action="/search/query")
+        br
+        form(role="search", method="get", action="/search/query")
             h3 XPath Search
             .input-group
                 input.form-control(name="xp", type="search", placeholder="Search via XPath")
@@ -25,8 +26,8 @@ block content
                     button.btn.btn-default(type="submit", aria-label="search")
                         span.glyphicon.glyphicon-search(aria-hidden="true")
 
+        br
         form(role="search", method="get", action="/search/query")
             h3 XQuery Search
-            .input-group
-                textarea.form-control(name="xq", type="search", placeholder="Search via XQuery")
-                button.btn.btn-default.pull-right(type="submit", aria-label="query") Query
+            textarea.form-control(name="xq", type="search", placeholder="Search via XQuery")
+            button.btn.btn-default.pull-right(type="submit", aria-label="query") Query

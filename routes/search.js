@@ -6,9 +6,7 @@ var _ = require('underscore');
 
 /* GET search page. */
 router.get('/', function(req, res, next) {
-  basex.searchHistory(function(err, data) {
-    res.render('search', { title: 'Colenso', history: data });
-  });
+    res.render('search', { title: 'Colenso - Search' });
 });
 
 /* GET advance search page */
@@ -29,7 +27,7 @@ router.get('/query', function(req, res, next) {
             context: ele.context
           };
         });
-        res.render('query', { title: 'Colenso',  results: results, docs: docs, query: req.query.q });
+        res.render('query', { title: 'Colenso - Search Result',  results: results, docs: docs, query: req.query.q });
       });
 
   } else if (req.query.xp) {
@@ -45,7 +43,7 @@ router.get('/query', function(req, res, next) {
             context: ele.context
           };
         });
-        res.render('query', { title: 'Colenso', results: results, docs: docs });
+        res.render('query', { title: 'Colenso - Search Result', results: results, docs: docs });
       });
   } else if (req.query.xq) {
     basex.searchXQuery(
@@ -53,9 +51,9 @@ router.get('/query', function(req, res, next) {
       function(err,data) {
         if (err) {
           console.log(err);
-          res.render('query', { title: 'Colenso', xquery: err });
+          res.render('query', { title: 'Colenso - Search Result - Error', xquery: err });
         } else {
-          res.render('query', { title: 'Colenso', xquery: data.result });
+          res.render('query', { title: 'Colenso - Search Result', xquery: data.result });
         }
       });
 
@@ -63,6 +61,7 @@ router.get('/query', function(req, res, next) {
     res.redirect('/search');
   }
 });
+
 
 router.post('/download', function(req, res, next) {
   var docs = req.body.docs.split(',');

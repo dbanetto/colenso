@@ -11,7 +11,9 @@ router.get('/*/view', function(req, res, next) {
     if (err) console.log(err);
     var crumbs = breadcrumbs(req.url.replace(/\/view\/?$/, ''), req.baseUrl);
     crumbs.unshift({title: 'Browse', url: req.baseUrl});
-    res.render('view', { title: 'Colenso', doc: teiToObject(doc), crumbs: crumbs, download_url: req.baseUrl + url + '.xml' });
+    var teiDoc = teiToObject(doc);
+    crumbs[crumbs.length - 1] = teiDoc.title;
+    res.render('view', { title: 'Colenso - Browse - ' + teiDoc.title, doc: teiDoc, crumbs: crumbs, download_url: req.baseUrl + url + '.xml' });
   });
 });
 
@@ -68,8 +70,13 @@ router.get('/*', function(req, res, next) {
       if (req.baseUrl !== req.originalUrl) {
         crumbs.unshift({title: 'Browse', url: req.baseUrl});
       }
+
       list = list.sort(function(a,b) { return a.title < b.title ? -1 : 1; });
-      res.render('browse', { title: 'Colenso', list: list, crumbs: crumbs });
+      var title = 'Colenso - Browse';
+      if (_.last(crumbs)) {
+        title = title + ' - ' + _.last(crumbs);
+      }
+      res.render('browse', { title: title, list: list, crumbs: crumbs });
   });
 });
 

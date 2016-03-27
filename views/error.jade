@@ -7,8 +7,10 @@ block navbar
 
 block content
     .jumbotron
-        h1 Something went wrong
+        .container
+            h1 Something went wrong
     .container
         h1= message
         h2= error.status
-        pre #{error.stack}
+        if error.stack
+            pre #{error.stack}
