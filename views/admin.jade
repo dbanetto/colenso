@@ -13,14 +13,11 @@ block content
                     span(aria-hidden="true") &times;
                 strong Error
                 |  #{error}
-        h2 Add new Document
+        h1 Admin Panel
         hr
-        form.form-horizontal(action="admin/new", method="post", enctype="multipart/form-data")
-            .from-group
-                label.control-label(for="path") Upload Path
-                input.form-control(type="text", name="path", required="true")
-                label.control-label(for="file") Document to upload
-                input(type="file", name="newDoc", required="true")
-                br
-            .from-group
-                button.btn.btn-default(type="submit", name="submit") Upload Document
+
+        p
+            a.btn.btn-default(href='history') Search History
+            span 
+            a.btn.btn-default(href='new') Add New Document
+

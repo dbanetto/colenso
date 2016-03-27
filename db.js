@@ -33,6 +33,7 @@ basex.Session.prototype.search = function(query, cb) {
           cb(err);
           return;
         }
+        basex.searchRecord(query, 'text', function(){});
         var $ = cheerio.load(data.result);
         var list = [];
         $('li').each(function(i, elem) {
@@ -42,7 +43,6 @@ basex.Session.prototype.search = function(query, cb) {
             path: $(this).attr('path')
           };
         });
-        basex.searchRecord(query, 'text', function(){});
         cb(undefined, list);
       });
 };
@@ -60,6 +60,7 @@ basex.Session.prototype.searchXPath = function(query, cb) {
           cb(err);
           return;
         }
+        basex.searchRecord(query, 'xpath', function(){});
         var $ = cheerio.load(data.result);
         var list = [];
         $('li').each(function(i, elem) {
@@ -69,7 +70,6 @@ basex.Session.prototype.searchXPath = function(query, cb) {
             path: $(this).attr('path')
           };
         });
-        basex.searchRecord(query, 'xpath', function(){});
         cb(undefined, list);
       });
 };
@@ -180,7 +180,16 @@ basex.Session.prototype.searchHistory = function(cb) {
           return;
         }
         basex.execute('open colenso');
-        cb(undefined, data.result);
+        var $ = cheerio.load(data.result);
+        var list = [];
+        $('search').each(function(i, elem) {
+          list[i] = { 
+            type: $(this).attr('type').trim(),
+            query: $(this).text().trim()
+          };
+        });
+        
+        cb(undefined, list);
       });
   });
 };

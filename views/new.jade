@@ -1,0 +1,23 @@
+extends layout
+
+block nav
+  +nav_item("/") Home
+  +nav_item("/browse") Browse
+  +nav_item("/search") Search
+
+block content
+    .container
+        h1 Add new Document
+        hr
+
+        form.form-horizontal(action="admin/new", method="post", enctype="multipart/form-data")
+            .from-group
+                label.control-label(for="path") Upload Path
+                input.form-control(type="text", name="path", required="true")
+                label.control-label(for="file") Document to upload
+                input(type="file", name="newDoc", required="true")
+                br
+            .from-group
+                button.btn.btn-success(type="submit", name="submit") Upload Document
+        br
+        a.btn.btn-default(href=".") Back to Admin
