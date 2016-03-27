@@ -6,7 +6,9 @@ var _ = require('underscore');
 
 /* GET search page. */
 router.get('/', function(req, res, next) {
-  res.render('search', { title: 'Colenso' });
+  basex.searchHistory(function(err, data) {
+    res.render('search', { title: 'Colenso', history: data });
+  });
 });
 
 /* GET advance search page */
@@ -15,43 +17,47 @@ router.get('/query', function(req, res, next) {
     if (req.query.r) {
       req.query.q = req.query.q + " AND " + req.query.r;
     }
-  basex.search(req.query.q,
-                function(err,data) {
-                  var docs = [];
-                  results = _.map(data, function(ele) {
-                    docs.push(ele.path);
-                    return {
-                      url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
-                      title: ele.title,
-                      context: ele.context
-                    };
-                  });
-                  res.render('query', { title: 'Colenso', results: results, docs: docs, query: req.query.q });
-                });
+    basex.search(
+      req.query.q,
+      function(err,data) {
+        var docs = [];
+        results = _.map(data, function(ele) {
+          docs.push(ele.path);
+          return {
+            url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
+            title: ele.title,
+            context: ele.context
+          };
+        });
+        res.render('query', { title: 'Colenso',  results: results, docs: docs, query: req.query.q });
+      });
+
   } else if (req.query.xp) {
-  basex.searchXPath(req.query.xp,
-                function(err,data) {
-                  var docs = [];
-                  results = _.map(data, function(ele) {
-                    docs.push(ele.path);
-                    return {
-                      url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
-                      title: ele.title,
-                      context: ele.context
-                    };
-                  });
-                  res.render('query', { title: 'Colenso', results: results, docs: docs });
-                });
+    basex.searchXPath(
+      req.query.xp,
+      function(err,data) {
+        var docs = [];
+        results = _.map(data, function(ele) {
+          docs.push(ele.path);
+          return {
+            url: '/browse/' + ele.path.replace(/\.xml$/, '/view'),
+            title: ele.title,
+            context: ele.context
+          };
+        });
+        res.render('query', { title: 'Colenso', results: results, docs: docs });
+      });
   } else if (req.query.xq) {
-  basex.searchXQuery(req.query.xq,
-                function(err,data) {
-                  if (err) {
-                    console.log(err);
-                    res.render('query', { title: 'Colenso', xquery: err });
-                  } else {
-                  res.render('query', { title: 'Colenso', xquery: data.result });
-                  }
-                });
+    basex.searchXQuery(
+      req.query.xq,
+      function(err,data) {
+        if (err) {
+          console.log(err);
+          res.render('query', { title: 'Colenso', xquery: err });
+        } else {
+          res.render('query', { title: 'Colenso', xquery: data.result });
+        }
+      });
 
   } else {
     res.redirect('/search');

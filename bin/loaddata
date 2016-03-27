@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var basex = require('../db');
-var fs = require("fs");
+var fs = require('fs');
 var path = require('path');
 var dive = require('dive');
 var xpath = require('xpath');
@@ -14,11 +14,23 @@ basex.execute("remove colenso", function(err, data) {
     if (err) {
       console.log(err);
     }
-    basex.execute("create db colenso", function(err, data) {
+    basex.execute("create db search", function(err, data) {
       if (err) {
         console.log(err);
       }
-      loaddata();
+      basex.execute('open search');
+      basex.add('search', '<root></root>', function(err, data) {
+        if (err) { 
+          console.log(err);
+        } 
+        console.log("created search document");
+        basex.execute("create db colenso", function(err, data) {
+          if (err) {
+            console.log(err);
+          }
+          loaddata();
+        });
+      });
     });
   });
 });
