@@ -61,6 +61,7 @@ router.get('/*/download', function(req, res, next) {
 router.get('/*', function(req, res, next) {
   basex.foldersInPath (req.url, function(err, data) {
     if (err) console.log(err);
+    req.originalUrl = req.originalUrl.replace(/\/$/,'');
     var list = _.map(data, function(ele) {
       return {
         url: req.originalUrl + '/' + ele.path.replace(/\.xml$/, '/view'),
@@ -77,7 +78,9 @@ router.get('/*', function(req, res, next) {
       if (_.last(crumbs)) {
         title = title + ' - ' + _.last(crumbs);
       }
-      res.render('browse', { title: title, list: list, crumbs: crumbs });
+      var back = crumbs[crumbs.length - 2];
+      back = back ? back.url : '/';
+      res.render('browse', { title: title, list: list, crumbs: crumbs, back: back });
   });
 });
 

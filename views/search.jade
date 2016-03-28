@@ -9,6 +9,11 @@ block content
     .container
         h1 Search
         hr
+        p 
+            strong Notice:
+            | Searchs are recoreded to guide which works should be prioritised to be marked up.
+            | The search history can be found 
+            a(href="/admin/history") here.
         form(role="search", method="get", action="/search/query")
             h3 Text Search
             .input-group
@@ -31,3 +36,5 @@ block content
             h3 XQuery Search
             textarea.form-control(name="xq", type="search", placeholder="Search via XQuery")
             button.btn.btn-default.pull-right(type="submit", aria-label="query") Query
+        br
+        a.btn.btn-default(href="/") Back
