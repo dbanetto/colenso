@@ -7,7 +7,7 @@ block navbar
 
 block content
     .container
-        h1
+        h1#top
             | Query results
             if docs && docs.length > 0
                 form(method="post", action="/search/download").pull-right
@@ -39,5 +39,6 @@ block content
                     code #{xquery}
                 else
                     h2 No results found
-                    h3
-                        a(href="/search") Back to search
+        br
+        a.btn.btn-default(href="/search") Back
+        a.btn.btn-default.pull-right(href="#top") Back to Top
