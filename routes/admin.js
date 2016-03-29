@@ -8,23 +8,23 @@ var _ = require('underscore');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('admin', { title: 'Colenso' });
+  res.render('admin', { title: 'Colenso - Admin' });
 });
 
-router.get('/new', function(req, res, next) {
-  res.render('new', { title: 'Colenso' });
+router.get('/upload', function(req, res, next) {
+  res.render('upload', { title: 'Colenso - Upload' });
 });
 
-router.post('/new', upload.single('newDoc'), function(req, res, next) {
+router.post('/upload', upload.single('newDoc'), function(req, res, next) {
   var path = req.body.path;
   fs.readFile(req.file.path, function(err, data) {
     if (err) {
-      res.render('new', { title: 'Colenso', error: error });
+      res.render('upload', { title: 'Colenso - Upload', error: error });
       return;
     }
     basex.addDocument(path, data, function(err, data) {
       if (err) {
-        res.render('new', { title: 'Colenso', error: error });
+        res.render('upload', { title: 'Colenso - Admin', error: error });
         return;
       }
       console.log(data);
