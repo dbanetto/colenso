@@ -11,13 +11,11 @@ This is apart of a Victoria University of Wellington SWEN303 project
 
 Requires [`docker-compose`](https://pypi.python.org/pypi/docker-compose/) version 1.6 or above 
 
-Run `docker-compose build && docker-compose up` to start the web service
+* Run `docker-compose build` to setup the container
 
-You will need to populate the database with `docker-compose run web
-bin/loaddata`
+* Populate the database with `docker-compose run web bin/loaddata`
 
-Known issues: the node server may start before the BaseX server is ready and then never connect,
- to resolve this stop the server by hitting `Ctrl+C` and run `docker-compose up`
+* Start the web service `docker-compose up`
 
 Then open `localhost:3000`
 

@@ -25,6 +25,7 @@ block content
                             span.glyphicon.glyphicon-search(aria-hidden="true")
         .result
             if results && results.length > 0
+                h4 Query returned #{results.length} results.
                 +list-group-custom()
                 each item in results
                     +list-group-item(item.url)

@@ -22,9 +22,10 @@ block content
                 input(id="doc", type="hidden", name="doc", value=doc)
             .form-group
                 a.btn.btn-default(href="view") Back
-                span 
-                a.btn.btn-default(href="#top") Back to Top
-                button.btn.btn-warning(type="submit").col-lg-1.pull-right Update
+                .pull-right
+                    a.btn.btn-default(href="#top") Back to Top
+                    span 
+                    button.btn.btn-warning(type="submit") Update
 
 block css
     link(rel="stylesheet" href="/css/codemirror.css")
