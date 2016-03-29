@@ -24,9 +24,10 @@ function searchQuerify(search) {
 basex.Session.prototype.search = function(query, cb) {
   var basex = this;
   var xquery =
-    "for $hit in collection('colenso')\n" +
-    "where $hit//*:text[. contains text " + searchQuerify(query) + "]\n" +
+    "for $hit score $score in collection('colenso')[. contains text " + searchQuerify(query) + " using wildcards ]\n" +
+    "order by $score descending \n" +
     "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit//*:titleStmt/*:author/*:name } </li>";
+    console.log("xquery:"+ xquery);
     this.execute("XQUERY <result> { " + xquery + " } </result> ",
       function(err, data) {
         if (err) {
@@ -37,7 +38,7 @@ basex.Session.prototype.search = function(query, cb) {
         var $ = cheerio.load(data.result);
         var list = [];
         $('li').each(function(i, elem) {
-          list[i] = { 
+          list[i] = {
             title: $(this).attr('title').trim(),
             context: $(this).text().trim() || 'Unknown',
             path: $(this).attr('path')
@@ -52,7 +53,7 @@ basex.Session.prototype.searchXPath = function(query, cb) {
   var xquery =
     "for $hit in collection('colenso')\n" +
     "where $hit" + query + "\n" +
-    "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit" + query + "} </li>";
+    "return <li path='{ db:path($hit) }' title='{ $hit//*:title }'> { $hit" + query + " } </li>";
     this.execute(
       "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';\n <result> { " + xquery + " } </result> ",
       function(err, data) {
@@ -200,7 +201,6 @@ basex.Session.prototype.searchRecord = function(query, type, cb) {
     "XQUERY " +
     "let $search := <search type='" + type + "'>" + escape(query) + "</search>\n"+
     "return insert node $search as last into doc('search')/root";
-  console.log(xquery);
   this.execute(
     xquery,
     function(err, data) {
