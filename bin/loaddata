@@ -19,16 +19,20 @@ basex.execute("remove colenso", function(err, data) {
         console.log(err);
       }
       basex.execute('open search');
-      basex.add('search', '<root></root>', function(err, data) {
+      basex.add('search.xml', '<root></root>', function(err, data) {
         if (err) { 
           console.log(err);
         } 
         console.log("created search document");
         basex.execute("create db colenso", function(err, data) {
-          if (err) {
-            console.log(err);
-          }
-          loaddata();
+            console.log("create colenso");
+          basex.execute("open colenso", function(err, data) {
+            console.log("Open colenso");
+            if (err) {
+              console.log(err);
+            }
+            loaddata();
+          });
         });
       });
     });
@@ -39,6 +43,7 @@ function print(err, reply) {
   progress = progress - 1;
   if (err) {
     console.log("Error: " + err);
+    console.log("Error: " + reply);
     process.exit(1);
   } else {
     console.log(reply);
@@ -61,7 +66,9 @@ function loaddata() {
     var filePath = file.substring(path.normalize(__dirname + '/../data').length);
 
     fs.readFile(file, 'utf-8', function(err, data) {
-      if (err) throw err;
+      if (err) {
+        console.log(path + ": " + err);
+      }
       basex.addDocument(filePath, data, print);
     });
   }, function() {

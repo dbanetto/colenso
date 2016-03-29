@@ -1,6 +1,7 @@
 var basex = require('basex');
 var cheerio = require('cheerio');
 var escape = require('escape-html');
+var xml = require('libxmljs');
 var _ = require('underscore');
 
 var session = new basex.Session(
@@ -138,7 +139,7 @@ basex.Session.prototype.addDocument = function(path, contents, cb)  {
   var basex = this;
 
   try {
-  var xmlDoc = xml.parseXmlString(contents);
+    var xmlDoc = xml.parseXmlString(contents);
   } catch(err) {
     cb('Invalid XML');
     return;
