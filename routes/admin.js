@@ -19,12 +19,14 @@ router.post('/upload', upload.single('newDoc'), function(req, res, next) {
   var path = '/' + req.body.author + '/' + req.body.type + '/' + req.file.originalname;
   fs.readFile(req.file.path, function(err, data) {
     if (err) {
-      res.render('upload', { title: 'Colenso - Upload', error: error });
+        console.log(err);
+      res.render('upload', { title: 'Colenso - Upload', error: err });
       return;
     }
     basex.addDocument(path, data, function(err, data) {
       if (err) {
-        res.render('upload', { title: 'Colenso - Admin', error: error });
+        console.log(err);
+        res.render('upload', { title: 'Colenso - Admin', error: err });
         return;
       }
       console.log(data);
