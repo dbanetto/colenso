@@ -10,14 +10,22 @@ block content
         h1 Upload Document
         hr
 
-        form.form-horizontal(action="admin/new", method="post", enctype="multipart/form-data")
+        form.form-horizontal(action="upload", method="post", enctype="multipart/form-data")
             .from-group
-                label.control-label(for="path") Upload Path
-                input.form-control(type="text", name="path", required="true")
-                label.control-label(for="file") Document to upload
+                label.control-label(for="file", required="true") Document to upload
                 input(type="file", name="newDoc", required="true")
                 br
+
+                label.control-label(for="path") Author
+                input.form-control(type="text", name="author", required="true")
+                br
+
+                label.control-label(for="type", required="true") Type of Document
+                select.form-control(name="type")
+                    option(value="private_letter") Private Letter
+                    option(value="newspaper_letter") Newspaper Letter
+                    option(value="diary") Diary
+                br
             .from-group
-                button.btn.btn-success(type="submit", name="submit") Upload Document
-        br
-        a.btn.btn-default(href="/admin") Back
+                a.btn.btn-default(href="/admin") Back
+                button.btn.btn-success.pull-right(type="submit", name="submit") Upload Document

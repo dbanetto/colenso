@@ -16,7 +16,7 @@ router.get('/upload', function(req, res, next) {
 });
 
 router.post('/upload', upload.single('newDoc'), function(req, res, next) {
-  var path = req.body.path;
+  var path = '/' + req.body.author + '/' + req.body.type + '/' + req.file.originalname;
   fs.readFile(req.file.path, function(err, data) {
     if (err) {
       res.render('upload', { title: 'Colenso - Upload', error: error });
